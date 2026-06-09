@@ -1,4 +1,6 @@
 node_modules/
-db/forum.sqlite
 .env
-public/uploads/
+*.db
+*.sqlite
+uploads/
+.DS_Store

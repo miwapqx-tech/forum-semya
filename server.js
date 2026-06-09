@@ -17,7 +17,7 @@ const app = express();
 const db = openDb();
 initDb(db);
 
-const PORT = Number(process.env.PORT) || 3000;
+const PORT = process.env.PORT || 3000;
 const HOST = process.env.HOST || "0.0.0.0";
 const isProd = process.env.NODE_ENV === "production";
 
