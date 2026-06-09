@@ -2,13 +2,11 @@ const path = require("path");
 const Database = require("better-sqlite3");
 const fs = require("fs");
 
-const DB_DIR = process.env.DATABASE_DIR || __dirname;
+const DB_DIR = process.env.DATABASE_DIR || path.join(__dirname, "..", "data");
 const DB_PATH = process.env.DATABASE_PATH || path.join(DB_DIR, "forum.sqlite");
 const SCHEMA_PATH = path.join(__dirname, "schema.sql");
 
-if (process.env.DATABASE_DIR) {
-  fs.mkdirSync(process.env.DATABASE_DIR, { recursive: true });
-}
+fs.mkdirSync(DB_DIR, { recursive: true });
 
 function nowMs() {
   return Date.now();

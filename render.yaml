@@ -1,8 +1,10 @@
-https://dashboard.render.com/web/srv-d8e3r3urnols739tlbh0/deploys/dep-d8e3r46rnols739tlbrg?r=2026-05-31%4013%3A53%3A24%7E2026-05-31%4013%3A56%3A51
+# Деплой на Render: https://render.com
+# New → Blueprint → подключить репозиторий с этим файлом
+# Или: New → Web Service → указать команды вручную (см. README)
 
 services:
   - type: web
-    name: forum-family
+    name: forum-semiya
     runtime: node
     region: frankfurt
     plan: free
@@ -15,12 +17,12 @@ services:
       - key: SESSION_SECRET
         generateValue: true
       - key: DATABASE_DIR
-        value: /var/data
+        value: /opt/render/project/src/data
       - key: GIGACHAT_CLIENT_ID
         sync: false
       - key: GIGACHAT_SECRET_KEY
         sync: false
-    disk:
-      name: forum-data
-      mountPath: /var/data
-      sizeGB: 1
+      - key: GIGACHAT_SCOPE
+        value: GIGACHAT_API_B2B
+      - key: GIGACHAT_MODEL
+        value: GigaChat

@@ -62,12 +62,19 @@ app.use(
 const csrfProtection = csrf({ cookie: true });
 
 const PUBLIC_DIR = path.join(__dirname, "public");
+const DATA_DIR = process.env.DATABASE_DIR || path.join(__dirname, "data");
+const UPLOADS_DIR = process.env.UPLOADS_DIR || path.join(DATA_DIR, "uploads");
+
+fs.mkdirSync(path.join(UPLOADS_DIR, "avatars"), { recursive: true });
+fs.mkdirSync(path.join(UPLOADS_DIR, "posts"), { recursive: true });
+
 app.use(express.static(PUBLIC_DIR));
+app.use("/uploads", express.static(UPLOADS_DIR));
 
 function multerStorage(subdir) {
   return multer.diskStorage({
     destination(req, file, cb) {
-      const dir = path.join(PUBLIC_DIR, "uploads", subdir);
+      const dir = path.join(UPLOADS_DIR, subdir);
       fs.mkdirSync(dir, { recursive: true });
       cb(null, dir);
     },
@@ -822,6 +829,8 @@ app.get("/ai", (req, res) => sendPage(res, "ai.html"));
 
 app.listen(PORT, HOST, () => {
   console.log(`Сервер запущен: http://${HOST}:${PORT} (NODE_ENV=${process.env.NODE_ENV || "development"})`);
+  console.log(`База данных: ${require("./db/db").DB_PATH}`);
+  console.log(`Загрузки: ${UPLOADS_DIR}`);
   if (aiService.isConfigured()) {
     console.log(`ИИ: включён (${aiService.getConfig().model})`);
   } else {
