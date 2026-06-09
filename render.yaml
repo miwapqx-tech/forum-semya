@@ -2,8 +2,9 @@ https://dashboard.render.com/web/srv-d8e3r3urnols739tlbh0/deploys/dep-d8e3r46rno
 
 services:
   - type: web
-    name: forum-semiya
+    name: forum-family
     runtime: node
+    region: frankfurt
     plan: free
     buildCommand: npm install
     startCommand: npm start
@@ -13,6 +14,13 @@ services:
         value: production
       - key: SESSION_SECRET
         generateValue: true
-      GIGACHAT_CLIENT_ID=019e7e12-2fd0-7cc4-8e71-486f3f488aa5
-      GIGACHAT_SECRET_KEY=MDE5ZTdlMTItMmZkMC03Y2M0LThlNzEtNDg2ZjNmNDg4YWE1OjJiNmQzZWRiLTBlMzgtNGFkNC1iNWQwLThkZTgwYmFhZGVmNA==
-      GIGACHAT_SCOPE=GIGACHAT_API_PERS
+      - key: DATABASE_DIR
+        value: /var/data
+      - key: GIGACHAT_CLIENT_ID
+        sync: false
+      - key: GIGACHAT_SECRET_KEY
+        sync: false
+    disk:
+      name: forum-data
+      mountPath: /var/data
+      sizeGB: 1
